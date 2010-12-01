@@ -25,7 +25,8 @@ class Command(NoArgsCommand):
             column_families,
         )
         
-        client = pycassa.connect('system')
+        client_pool = pycassa.connect('system')
+        client = client_pool.get()
 
         # If there is already a Twissandra keyspace, we have to ask the user
         # what they want to do with it.

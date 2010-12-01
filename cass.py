@@ -12,15 +12,15 @@ __all__ = ['get_user_by_username', 'get_friend_usernames',
     'save_tweet', 'add_friends', 'remove_friends', 'DatabaseError',
     'NotFound', 'InvalidDictionary', 'PUBLIC_USERLINE_KEY']
 
-CLIENT = pycassa.connect('Twissandra')
+CLIENT_POOL = pycassa.connect('Twissandra')
 
-USER = pycassa.ColumnFamily(CLIENT, 'User', dict_class=OrderedDict)
-USERNAME = pycassa.ColumnFamily(CLIENT, 'Username', dict_class=OrderedDict)
-FRIENDS = pycassa.ColumnFamily(CLIENT, 'Friends', dict_class=OrderedDict)
-FOLLOWERS = pycassa.ColumnFamily(CLIENT, 'Followers', dict_class=OrderedDict)
-TWEET = pycassa.ColumnFamily(CLIENT, 'Tweet', dict_class=OrderedDict)
-TIMELINE = pycassa.ColumnFamily(CLIENT, 'Timeline', dict_class=OrderedDict)
-USERLINE = pycassa.ColumnFamily(CLIENT, 'Userline', dict_class=OrderedDict)
+USER = pycassa.ColumnFamily(CLIENT_POOL, 'User', dict_class=OrderedDict)
+USERNAME = pycassa.ColumnFamily(CLIENT_POOL, 'Username', dict_class=OrderedDict)
+FRIENDS = pycassa.ColumnFamily(CLIENT_POOL, 'Friends', dict_class=OrderedDict)
+FOLLOWERS = pycassa.ColumnFamily(CLIENT_POOL, 'Followers', dict_class=OrderedDict)
+TWEET = pycassa.ColumnFamily(CLIENT_POOL, 'Tweet', dict_class=OrderedDict)
+TIMELINE = pycassa.ColumnFamily(CLIENT_POOL, 'Timeline', dict_class=OrderedDict)
+USERLINE = pycassa.ColumnFamily(CLIENT_POOL, 'Userline', dict_class=OrderedDict)
 
 # NOTE: Having a single userline key to store all of the public tweets is not
 #       scalable.  Currently, Cassandra requires that an entire row (meaning
